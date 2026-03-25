@@ -2,4 +2,4 @@
 2:I[39756,["/lenny-product-fortune-teller/_next/static/chunks/12~4i3ucewdqv.js","/lenny-product-fortune-teller/_next/static/chunks/0l~dn~5rd7gsm.js","/lenny-product-fortune-teller/_next/static/chunks/0d3tkj33oycf2.js"],"default"]
 3:I[37457,["/lenny-product-fortune-teller/_next/static/chunks/12~4i3ucewdqv.js","/lenny-product-fortune-teller/_next/static/chunks/0l~dn~5rd7gsm.js","/lenny-product-fortune-teller/_next/static/chunks/0d3tkj33oycf2.js"],"default"]
 4:[]
-0:{"rsc":["$","$1","c",{"children":[null,["$","$L2",null,{"parallelRouterKey":"children","template":["$","$L3",null,{}]}]]}],"isPartial":false,"staleTime":300,"varyParams":"$W4","buildId":"mBkKX2Rp_cip9tEcuYg2j"}
+0:{"rsc":["$","$1","c",{"children":[null,["$","$L2",null,{"parallelRouterKey":"children","template":["$","$L3",null,{}]}]]}],"isPartial":false,"staleTime":300,"varyParams":"$W4","buildId":"ueFhu6WL2B_VI-bSQMpRn"}
