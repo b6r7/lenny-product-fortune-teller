@@ -119,7 +119,7 @@ const LoadingScreen = ({ onComplete }: LoadingScreenProps) => {
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -8 }}
           transition={{ duration: 0.25 }}
-          className="font-serif text-lg text-text-secondary/60 italic"
+          className="font-serif text-lg text-[#fefefe] italic"
         >
           {MESSAGES[messageIndex]}
         </motion.p>

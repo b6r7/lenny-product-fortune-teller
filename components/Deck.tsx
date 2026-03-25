@@ -42,7 +42,7 @@ const Deck = ({ cards, userInput, onReset }: DeckProps) => {
         initial={{ opacity: 0, y: -10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.1 }}
-        className="font-serif text-base sm:text-lg text-text-secondary/50 italic text-center max-w-lg px-4"
+        className="font-serif text-base sm:text-lg text-[#fefefe]/70 italic text-center max-w-lg px-4"
       >
         &ldquo;{userInput}&rdquo;
       </motion.p>
@@ -54,7 +54,7 @@ const Deck = ({ cards, userInput, onReset }: DeckProps) => {
             animate={{ opacity: 0.5 }}
             exit={{ opacity: 0, y: -8 }}
             transition={{ delay: 0.8 }}
-            className="text-text-muted text-sm font-body tracking-wide"
+            className="text-[#fefefe]/70 text-sm font-body tracking-wide"
           >
             Click a card to reveal your truth
           </motion.p>
@@ -103,7 +103,7 @@ const Deck = ({ cards, userInput, onReset }: DeckProps) => {
                 animate={{ opacity: 0.4, y: 0, filter: "blur(0px)" }}
                 exit={{ opacity: 0, y: -4, filter: "blur(4px)" }}
                 transition={{ duration: 0.3 }}
-                className="font-body text-[11px] text-text-muted tracking-wide"
+                className="font-body text-[11px] text-[#fefefe]/60 tracking-wide"
               >
                 {actionMode
                   ? "Alright. Here\u2019s what to actually do."

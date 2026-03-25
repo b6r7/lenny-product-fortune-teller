@@ -68,7 +68,7 @@ const Home = () => {
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ delay: 0.8, duration: 0.8 }}
-                  className="font-serif text-base sm:text-lg text-text-secondary/50 italic"
+                  className="font-serif text-base sm:text-lg text-[#fefefe] italic"
                 >
                   Ask, and the cards will answer.
                 </motion.p>
@@ -76,9 +76,9 @@ const Home = () => {
 
               <motion.p
                 initial={{ opacity: 0 }}
-                animate={{ opacity: 0.45 }}
+                animate={{ opacity: 1 }}
                 transition={{ delay: 1.1, duration: 0.8 }}
-                className="font-body text-sm text-text-muted tracking-wide"
+                className="font-body text-sm text-[#fefefe]/70 tracking-wide"
               >
                 Describe your situation. Lenny will deal the cards.
               </motion.p>

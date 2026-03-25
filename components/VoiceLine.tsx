@@ -29,7 +29,7 @@ const VoiceLine = () => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ delay: 0.3 }}
-      className="font-serif text-base sm:text-lg text-gold-mid/50 italic text-center max-w-md px-4"
+      className="font-serif text-base sm:text-lg text-gold-mid italic text-center max-w-md px-4"
     >
       &ldquo;{displayed}
       {!isDone && (

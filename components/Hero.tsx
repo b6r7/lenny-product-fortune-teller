@@ -1,21 +1,31 @@
 "use client"
 
+import { useMemo } from "react"
 import { motion } from "framer-motion"
 import Image from "next/image"
 
 const PARTICLE_COUNT = 24
 
-const heroParticles = Array.from({ length: PARTICLE_COUNT }, (_, i) => ({
-  id: i,
-  left: `${Math.random() * 100}%`,
-  top: `${Math.random() * 90}%`,
-  size: Math.random() * 2.5 + 1,
-  delay: Math.random() * 8,
-  duration: Math.random() * 5 + 7,
-  isGold: Math.random() > 0.35,
-}))
+const seededRandom = (seed: number) => {
+  const x = Math.sin(seed * 9301 + 49297) * 49297
+  return x - Math.floor(x)
+}
 
 const Hero = () => {
+  const heroParticles = useMemo(
+    () =>
+      Array.from({ length: PARTICLE_COUNT }, (_, i) => ({
+        id: i,
+        left: `${seededRandom(i * 3 + 1) * 100}%`,
+        top: `${seededRandom(i * 3 + 2) * 90}%`,
+        size: seededRandom(i * 3 + 3) * 2.5 + 1,
+        delay: seededRandom(i * 7 + 4) * 8,
+        duration: seededRandom(i * 7 + 5) * 5 + 7,
+        isGold: seededRandom(i * 7 + 6) > 0.35,
+      })),
+    []
+  )
+
   return (
     <motion.section
       className="relative w-full overflow-hidden"
@@ -38,6 +48,18 @@ const Hero = () => {
             }}
           />
         </div>
+
+        {/* ——— GRADIENT MASK (bottom fade via mask-image) ——— */}
+        <div
+          className="absolute inset-0 pointer-events-none"
+          style={{
+            background: "#0B0B0F",
+            maskImage:
+              "linear-gradient(to top, black 0%, black 5%, transparent 55%)",
+            WebkitMaskImage:
+              "linear-gradient(to top, black 0%, black 5%, transparent 55%)",
+          }}
+        />
       </div>
 
       {/* ——— ATMOSPHERIC TOP GRADIENT ——— */}
@@ -49,12 +71,12 @@ const Hero = () => {
         }}
       />
 
-      {/* ——— BOTTOM FADE (kills baked text, blends to bg) ——— */}
+      {/* ——— EXTENDED BOTTOM FADE (very smooth transition) ——— */}
       <div
-        className="absolute bottom-0 left-0 w-full h-[60%] z-10 pointer-events-none"
+        className="absolute bottom-0 left-0 w-full h-[75%] z-10 pointer-events-none"
         style={{
           background:
-            "linear-gradient(to bottom, transparent 0%, rgba(11,11,15,0.35) 25%, rgba(11,11,15,0.75) 55%, rgba(11,11,15,0.95) 75%, #0B0B0F 100%)",
+            "linear-gradient(to bottom, transparent 0%, rgba(11,11,15,0.08) 15%, rgba(11,11,15,0.2) 30%, rgba(11,11,15,0.45) 45%, rgba(11,11,15,0.7) 58%, rgba(11,11,15,0.88) 70%, rgba(11,11,15,0.96) 82%, #0B0B0F 92%)",
         }}
       />
 
@@ -76,7 +98,7 @@ const Hero = () => {
         }}
       />
 
-      {/* ——— CRYSTAL BALL GLOW (centered warm spot) ——— */}
+      {/* ——— CRYSTAL BALL GLOW ——— */}
       <div
         className="absolute z-10 pointer-events-none animate-hero-glow"
         style={{

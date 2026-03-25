@@ -81,7 +81,7 @@ const InputPanel = ({ onSubmit }: InputPanelProps) => {
             className={`relative flex-1 py-2.5 px-4 text-sm font-medium rounded-lg transition-all duration-300 cursor-pointer ${
               activeTab === tab.id
                 ? "text-gold-bright"
-                : "text-text-muted hover:text-text-secondary"
+                : "text-[#fefefe]/60 hover:text-[#fefefe]"
             }`}
           >
             {activeTab === tab.id && (
@@ -113,7 +113,7 @@ const InputPanel = ({ onSubmit }: InputPanelProps) => {
               placeholder="e.g. users drop off after signup and we don't know why"
               rows={4}
               aria-label="Describe your product situation"
-              className="w-full bg-transparent text-text-primary placeholder:text-text-muted/40 resize-none outline-none font-body text-base leading-relaxed"
+              className="w-full bg-transparent text-[#fefefe] placeholder:text-[#fefefe]/30 resize-none outline-none font-body text-base leading-relaxed"
             />
           )}
 
@@ -130,7 +130,7 @@ const InputPanel = ({ onSubmit }: InputPanelProps) => {
               onKeyDown={handleKeyDown}
               placeholder="https://your-product.com/signup"
               aria-label="Paste your product URL"
-              className="w-full bg-transparent text-text-primary placeholder:text-text-muted/40 outline-none font-body text-base py-3"
+              className="w-full bg-transparent text-[#fefefe] placeholder:text-[#fefefe]/30 outline-none font-body text-base py-3"
             />
           )}
 
@@ -154,7 +154,7 @@ const InputPanel = ({ onSubmit }: InputPanelProps) => {
                     onClick={handleClearScreenshot}
                     aria-label="Remove screenshot"
                     tabIndex={0}
-                    className="absolute top-2 right-2 w-8 h-8 rounded-full bg-black/60 text-text-secondary hover:text-white flex items-center justify-center cursor-pointer transition-colors"
+                    className="absolute top-2 right-2 w-8 h-8 rounded-full bg-black/60 text-[#fefefe]/70 hover:text-[#fefefe] flex items-center justify-center cursor-pointer transition-colors"
                   >
                     ✕
                   </button>
@@ -167,7 +167,7 @@ const InputPanel = ({ onSubmit }: InputPanelProps) => {
                   }
                   aria-label="Upload a screenshot"
                   tabIndex={0}
-                  className="w-full py-12 border-2 border-dashed border-white/[0.07] rounded-xl text-text-muted hover:border-gold-dim/30 hover:text-text-secondary transition-all cursor-pointer group"
+                  className="w-full py-12 border-2 border-dashed border-white/[0.07] rounded-xl text-[#fefefe]/60 hover:border-gold-dim/30 hover:text-[#fefefe] transition-all cursor-pointer group"
                 >
                   <div className="text-3xl mb-2 opacity-50 group-hover:opacity-70 transition-opacity">
                     ⬆
@@ -209,7 +209,7 @@ const InputPanel = ({ onSubmit }: InputPanelProps) => {
           ${
             hasInput
               ? "bg-gradient-to-r from-[#B8942E] via-[#F5C451] to-[#B8942E] text-[#0B0B0F] shadow-[0_0_30px_rgba(245,196,81,0.1)]"
-              : "bg-white/[0.04] text-text-muted cursor-not-allowed"
+              : "bg-white/[0.04] text-[#fefefe]/40 cursor-not-allowed"
           }
         `}
       >
