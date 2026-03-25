@@ -5,7 +5,7 @@ import { motion } from "framer-motion"
 const Background = () => {
   return (
     <div className="fixed inset-0 -z-10 overflow-hidden">
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_#1a0e35_0%,_#080510_60%,_#050308_100%)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_#150d2a_0%,_#0B0B0F_50%,_#080510_100%)]" />
 
       <motion.div
         className="absolute top-1/4 left-1/4 w-[500px] h-[500px] rounded-full blur-[150px]"

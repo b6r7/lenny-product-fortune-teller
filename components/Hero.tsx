@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect, useMemo } from "react"
+import { useState, useEffect } from "react"
 import { motion } from "framer-motion"
 import Image from "next/image"
 
@@ -11,6 +11,21 @@ const seededRandom = (seed: number) => {
   return x - Math.floor(x)
 }
 
+const round2 = (n: number) => Math.round(n * 100) / 100
+
+const heroParticles = Array.from({ length: PARTICLE_COUNT }, (_, i) => {
+  const size = round2(seededRandom(i * 3 + 3) * 2.5 + 1)
+  return {
+    id: i,
+    left: `${round2(seededRandom(i * 3 + 1) * 100)}%`,
+    top: `${round2(seededRandom(i * 3 + 2) * 90)}%`,
+    size: `${size}px`,
+    delay: `${round2(seededRandom(i * 7 + 4) * 8)}s`,
+    duration: `${round2(seededRandom(i * 7 + 5) * 5 + 7)}s`,
+    isGold: seededRandom(i * 7 + 6) > 0.35,
+  }
+})
+
 const Hero = () => {
   const [scrollY, setScrollY] = useState(0)
 
@@ -20,23 +35,9 @@ const Hero = () => {
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
 
-  const heroParticles = useMemo(
-    () =>
-      Array.from({ length: PARTICLE_COUNT }, (_, i) => ({
-        id: i,
-        left: `${seededRandom(i * 3 + 1) * 100}%`,
-        top: `${seededRandom(i * 3 + 2) * 90}%`,
-        size: seededRandom(i * 3 + 3) * 2.5 + 1,
-        delay: seededRandom(i * 7 + 4) * 8,
-        duration: seededRandom(i * 7 + 5) * 5 + 7,
-        isGold: seededRandom(i * 7 + 6) > 0.35,
-      })),
-    []
-  )
-
   return (
     <motion.section
-      className="relative w-full h-[380px] sm:h-[440px] md:h-[500px] lg:h-[540px] overflow-hidden"
+      className="relative w-full h-[420px] sm:h-[480px] md:h-[540px] lg:h-[580px] overflow-hidden"
       aria-label="Hero illustration"
       initial={{ opacity: 0, scale: 1.03 }}
       animate={{ opacity: 1, scale: 1 }}
@@ -53,23 +54,23 @@ const Hero = () => {
             alt="Lenny the Fortune Teller gazing into a crystal ball"
             fill
             priority
-            className="object-cover object-center"
+            className="object-cover object-[center_20%]"
             style={{
               maskImage:
-                "linear-gradient(to bottom, black 0%, black 40%, transparent 92%)",
+                "linear-gradient(to bottom, black 0%, black 50%, transparent 95%)",
               WebkitMaskImage:
-                "linear-gradient(to bottom, black 0%, black 40%, transparent 92%)",
+                "linear-gradient(to bottom, black 0%, black 50%, transparent 95%)",
             }}
           />
         </div>
       </div>
 
-      {/* ——— DARK PURPLE FADE (matches bg) ——— */}
+      {/* ——— DARK FADE (image bottom → app bg) ——— */}
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
           background:
-            "linear-gradient(to bottom, transparent 0%, rgba(18,12,42,0.15) 35%, rgba(18,12,42,0.45) 55%, rgba(11,11,15,0.8) 75%, #0B0B0F 95%)",
+            "linear-gradient(to bottom, transparent 0%, rgba(18,12,42,0.1) 40%, rgba(18,12,42,0.35) 55%, rgba(11,11,15,0.7) 72%, rgba(11,11,15,0.92) 85%, #0B0B0F 97%)",
         }}
       />
 
@@ -78,16 +79,16 @@ const Hero = () => {
         className="absolute inset-0 pointer-events-none"
         style={{
           background:
-            "radial-gradient(ellipse 85% 80% at 50% 40%, transparent 45%, rgba(0,0,0,0.65) 100%)",
+            "radial-gradient(ellipse 85% 80% at 50% 35%, transparent 45%, rgba(0,0,0,0.6) 100%)",
         }}
       />
 
-      {/* ——— SOFT PURPLE GLOW (mystical atmosphere) ——— */}
+      {/* ——— SOFT PURPLE GLOW ——— */}
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
           background:
-            "radial-gradient(circle at 50% 55%, rgba(91,46,255,0.12) 0%, transparent 60%)",
+            "radial-gradient(circle at 50% 55%, rgba(91,46,255,0.1) 0%, transparent 55%)",
           filter: "blur(40px)",
         }}
       />
@@ -120,8 +121,8 @@ const Hero = () => {
               background: p.isGold
                 ? "radial-gradient(circle, rgba(245,196,81,0.9) 0%, transparent 70%)"
                 : "radial-gradient(circle, rgba(167,139,250,0.7) 0%, transparent 70%)",
-              animationDuration: `${p.duration}s`,
-              animationDelay: `${p.delay}s`,
+              animationDuration: p.duration,
+              animationDelay: p.delay,
               opacity: 0,
             }}
           />
