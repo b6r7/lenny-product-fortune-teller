@@ -53,7 +53,7 @@ const Home = () => {
           >
             <Hero />
 
-            <div className="relative z-10 -mt-12 sm:-mt-16 flex flex-col items-center gap-6 px-4 pb-20">
+            <div className="relative z-10 -mt-20 sm:-mt-28 flex flex-col items-center gap-6 px-4 pb-20">
               <motion.div
                 initial={{ opacity: 0, y: -16 }}
                 animate={{ opacity: 1, y: 0 }}

@@ -1,10 +1,10 @@
 "use client"
 
-import { useMemo } from "react"
+import { useState, useEffect, useMemo } from "react"
 import { motion } from "framer-motion"
 import Image from "next/image"
 
-const PARTICLE_COUNT = 24
+const PARTICLE_COUNT = 20
 
 const seededRandom = (seed: number) => {
   const x = Math.sin(seed * 9301 + 49297) * 49297
@@ -12,6 +12,14 @@ const seededRandom = (seed: number) => {
 }
 
 const Hero = () => {
+  const [scrollY, setScrollY] = useState(0)
+
+  useEffect(() => {
+    const handleScroll = () => setScrollY(window.scrollY)
+    window.addEventListener("scroll", handleScroll, { passive: true })
+    return () => window.removeEventListener("scroll", handleScroll)
+  }, [])
+
   const heroParticles = useMemo(
     () =>
       Array.from({ length: PARTICLE_COUNT }, (_, i) => ({
@@ -28,92 +36,78 @@ const Hero = () => {
 
   return (
     <motion.section
-      className="relative w-full overflow-hidden"
+      className="relative w-full h-[380px] sm:h-[440px] md:h-[500px] lg:h-[540px] overflow-hidden"
       aria-label="Hero illustration"
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 1.2, ease: "easeOut" }}
+      initial={{ opacity: 0, scale: 1.03 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ duration: 1, ease: "easeOut" }}
     >
-      {/* ——— IMAGE CONTAINER ——— */}
-      <div className="relative w-full h-[280px] sm:h-[340px] md:h-[400px] lg:h-[420px]">
+      {/* ——— IMAGE (parallax + mask fade) ——— */}
+      <div
+        className="absolute inset-0 will-change-transform"
+        style={{ transform: `translateY(${scrollY * 0.12}px)` }}
+      >
         <div className="absolute inset-0 animate-hero-float">
           <Image
             src="/hero/lenny-wizard.png"
             alt="Lenny the Fortune Teller gazing into a crystal ball"
             fill
             priority
-            className="object-cover object-[center_25%]"
+            className="object-cover object-center"
             style={{
-              filter: "saturate(0.85) contrast(1.08) brightness(0.7)",
+              maskImage:
+                "linear-gradient(to bottom, black 0%, black 40%, transparent 92%)",
+              WebkitMaskImage:
+                "linear-gradient(to bottom, black 0%, black 40%, transparent 92%)",
             }}
           />
         </div>
-
-        {/* ——— GRADIENT MASK (bottom fade via mask-image) ——— */}
-        <div
-          className="absolute inset-0 pointer-events-none"
-          style={{
-            background: "#0B0B0F",
-            maskImage:
-              "linear-gradient(to top, black 0%, black 5%, transparent 55%)",
-            WebkitMaskImage:
-              "linear-gradient(to top, black 0%, black 5%, transparent 55%)",
-          }}
-        />
       </div>
 
-      {/* ——— ATMOSPHERIC TOP GRADIENT ——— */}
+      {/* ——— DARK PURPLE FADE (matches bg) ——— */}
       <div
-        className="absolute top-0 left-0 w-full h-[40%] z-10 pointer-events-none"
+        className="absolute inset-0 pointer-events-none"
         style={{
           background:
-            "linear-gradient(to bottom, rgba(18,12,42,0.6) 0%, rgba(11,11,15,0.15) 60%, transparent 100%)",
+            "linear-gradient(to bottom, transparent 0%, rgba(18,12,42,0.15) 35%, rgba(18,12,42,0.45) 55%, rgba(11,11,15,0.8) 75%, #0B0B0F 95%)",
         }}
       />
 
-      {/* ——— EXTENDED BOTTOM FADE (very smooth transition) ——— */}
+      {/* ——— VIGNETTE (edge darkness) ——— */}
       <div
-        className="absolute bottom-0 left-0 w-full h-[75%] z-10 pointer-events-none"
+        className="absolute inset-0 pointer-events-none"
         style={{
           background:
-            "linear-gradient(to bottom, transparent 0%, rgba(11,11,15,0.08) 15%, rgba(11,11,15,0.2) 30%, rgba(11,11,15,0.45) 45%, rgba(11,11,15,0.7) 58%, rgba(11,11,15,0.88) 70%, rgba(11,11,15,0.96) 82%, #0B0B0F 92%)",
+            "radial-gradient(ellipse 85% 80% at 50% 40%, transparent 45%, rgba(0,0,0,0.65) 100%)",
         }}
       />
 
-      {/* ——— VIGNETTE ——— */}
+      {/* ——— SOFT PURPLE GLOW (mystical atmosphere) ——— */}
       <div
-        className="absolute inset-0 z-10 pointer-events-none"
+        className="absolute inset-0 pointer-events-none"
         style={{
           background:
-            "radial-gradient(ellipse 80% 90% at 50% 40%, transparent 30%, rgba(0,0,0,0.5) 100%)",
+            "radial-gradient(circle at 50% 55%, rgba(91,46,255,0.12) 0%, transparent 60%)",
+          filter: "blur(40px)",
         }}
       />
 
-      {/* ——— SIDE CURTAIN FADE ——— */}
+      {/* ——— CRYSTAL BALL WARM GLOW ——— */}
       <div
-        className="absolute inset-0 z-10 pointer-events-none"
-        style={{
-          background:
-            "linear-gradient(to right, rgba(11,11,15,0.5) 0%, transparent 15%, transparent 85%, rgba(11,11,15,0.5) 100%)",
-        }}
-      />
-
-      {/* ——— CRYSTAL BALL GLOW ——— */}
-      <div
-        className="absolute z-10 pointer-events-none animate-hero-glow"
+        className="absolute pointer-events-none animate-hero-glow"
         style={{
           left: "50%",
-          bottom: "30%",
-          width: "300px",
-          height: "200px",
-          transform: "translateX(-50%)",
+          top: "50%",
+          width: "350px",
+          height: "250px",
+          transform: "translate(-50%, -20%)",
           background:
-            "radial-gradient(ellipse at center, rgba(245,196,81,0.08) 0%, transparent 70%)",
+            "radial-gradient(ellipse at center, rgba(245,196,81,0.1) 0%, transparent 65%)",
         }}
       />
 
       {/* ——— GOLD / VIOLET PARTICLES ——— */}
-      <div className="absolute inset-0 z-20 pointer-events-none overflow-hidden">
+      <div className="absolute inset-0 z-10 pointer-events-none overflow-hidden">
         {heroParticles.map((p) => (
           <div
             key={p.id}
