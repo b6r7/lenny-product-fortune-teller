@@ -11,11 +11,15 @@
     {
       "quote": "If you're not prototyping and building to see what you want to build, I think you're doing it wrong.",
       "source": "Aparna Chennapragada, Lenny's Podcast"
+    },
+    {
+      "quote": "We put questions into the onboarding flow and it actually improved conversion. Just the act of asking questions made users feel heard.",
+      "source": "Laura Schaffer, Lenny's Podcast"
     }
   ],
   "growth": [
     {
-      "quote": "Growth as the job is to connect users to the value of your product. Growth sometimes gets this reputation that it's just pure metrics hacking.",
+      "quote": "Growth is the job of connecting users to the value of your product. It sometimes gets this reputation that it's just metrics hacking.",
       "source": "Albert Cheng, Lenny's Podcast"
     },
     {
@@ -25,6 +29,10 @@
     {
       "quote": "We rarely scale a project until we know the Sean Ellis score hit a threshold that we find really compelling.",
       "source": "Jag Duggal, Lenny's Podcast"
+    },
+    {
+      "quote": "The goal of your kindle strategies, these non-scalable hacks, they only exist to unlock the things that could take you to millions of users.",
+      "source": "Casey Winters, Lenny's Podcast"
     }
   ],
   "retention": [
@@ -37,13 +45,13 @@
       "source": "Elena Verna, Lenny's Podcast"
     },
     {
-      "quote": "Good luck getting a hundred percent feature adoption of anything else in your product.",
-      "source": "Adam Fishman, Lenny's Podcast"
+      "quote": "The best way to get more people to a step is just get more people in the door in the first place. That will always hurt your conversion rate, but it may actually give you more people.",
+      "source": "Archie Abrams, Lenny's Podcast"
     }
   ],
   "pricing": [
     {
-      "quote": "The good founders need to be able to dominate both market share and wallet share. It is not a choice. You need to get better at both.",
+      "quote": "The good founders need to dominate both market share and wallet share. It is not a choice.",
       "source": "Madhavan Ramanujam, Lenny's Podcast"
     },
     {
@@ -53,6 +61,10 @@
     {
       "quote": "The most powerful unquantifiable things in the world of business are fun and delight.",
       "source": "Tobi Lütke, Lenny's Podcast"
+    },
+    {
+      "quote": "What the marketplaces are selling you is taking the friction away. That's what you're paying them for.",
+      "source": "Ramesh Johari, Lenny's Podcast"
     }
   ],
   "strategy": [
@@ -65,8 +77,12 @@
       "source": "Anneka Gupta, Lenny's Podcast"
     },
     {
-      "quote": "Way too many founders apologize for how they want to run the company. That's a good way to make everyone miserable. Because what everyone really wants is clarity.",
+      "quote": "Way too many founders apologize for how they want to run the company. That's a good way to make everyone miserable.",
       "source": "Brian Chesky, Lenny's Podcast"
+    },
+    {
+      "quote": "The whole point about a roadmap is that it's not designed to be your plan. Think of it as a prototype for your strategy.",
+      "source": "Janna Bastow, Lenny's Podcast"
     }
   ],
   "focus": [
@@ -81,6 +97,10 @@
     {
       "quote": "Your job is figuring out what the algorithm should be responsible for, what people are responsible for, and the framework for making those decisions.",
       "source": "Adriel Frederick, Lenny's Podcast"
+    },
+    {
+      "quote": "If you start small, it forces you to think about what is the problem that I'm going to solve.",
+      "source": "Aishwarya Naresh Reganti, Lenny's Podcast"
     }
   ],
   "metrics": [
@@ -89,8 +109,12 @@
       "source": "Adriel Frederick, Lenny's Podcast"
     },
     {
-      "quote": "There is no such thing as a long feedback loop. The way you choose to shorten it is to say, what are the things correlated with the outcome that I eventually desire?",
+      "quote": "There is no such thing as a long feedback loop. The way you shorten it is to say, what are the things correlated with the outcome that I eventually desire?",
       "source": "Annie Duke, Lenny's Podcast"
+    },
+    {
+      "quote": "I have an allergic reaction to vanity metrics. The transition from operator to investor made that very clear.",
+      "source": "Sarah Tavel, Lenny's Podcast"
     },
     {
       "quote": "Most people tend to ignore the non-determinism. You don't know how the user might behave with your product.",
@@ -103,12 +127,132 @@
       "source": "Tobi Lütke, Lenny's Podcast"
     },
     {
-      "quote": "Every time you hand over decision-making capabilities to agentic systems, you're relinquishing some amount of control on your end.",
+      "quote": "I want someone that's going to champion and be a change agent to do things that may be hard but actually best for the long-term interest of the product.",
+      "source": "Anneka Gupta, Lenny's Podcast"
+    },
+    {
+      "quote": "If I drill down what makes companies fail, it's quite simple. They don't talk to users, which means they don't find product market fit.",
+      "source": "Gustaf Alströmer, Lenny's Podcast"
+    },
+    {
+      "quote": "It's not about being the first company to have an agent. It's about whether you've built the right flywheels to improve over time.",
+      "source": "Aishwarya Naresh Reganti, Lenny's Podcast"
+    }
+  ],
+  "activation": [
+    {
+      "quote": "An activation rate in a lower percentage range, maybe 5 to 15%, is better than a higher one because it means much higher correlation with long-term retention.",
+      "source": "Lauryn Isford, Lenny's Podcast"
+    },
+    {
+      "quote": "Facebook knew it needed to get you to 10 friends in 14 days. If you got your 10 friends in 14 days, you were probably going to use Facebook for the rest of your life.",
+      "source": "Sriram Krishnan, Lenny's Podcast"
+    },
+    {
+      "quote": "When you give away your free product, what you want in exchange is a broader reach and understanding of usage behavior.",
+      "source": "Hila Qu, Lenny's Podcast"
+    }
+  ],
+  "churn": [
+    {
+      "quote": "Your entire customer base changed, not just the next 10% of customers that you're looking for.",
+      "source": "Adam Grenier, Lenny's Podcast"
+    },
+    {
+      "quote": "If you don't have a foundation of data and understanding of how to analyze it, you are giving away a free product for nothing.",
+      "source": "Hila Qu, Lenny's Podcast"
+    },
+    {
+      "quote": "The simple act of getting together and saying 'what was the most awesome thing that happened this week' makes people feel like they're part of something special.",
+      "source": "Christina Wodtke, Lenny's Podcast"
+    }
+  ],
+  "decision_making": [
+    {
+      "quote": "40 to 60% of B2B purchase processes end in no decision. The majority couldn't figure out how to make a choice confidently.",
+      "source": "April Dunford, Lenny's Podcast"
+    },
+    {
+      "quote": "The brain is like a college campus with different departments. Most people rely on their history department way too much.",
+      "source": "Evan LaPointe, Lenny's Podcast"
+    },
+    {
+      "quote": "There's one failure mode where they don't know what the basics are. Then there's another where they never test it.",
+      "source": "John Zeratsky, Lenny's Podcast"
+    }
+  ],
+  "positioning": [
+    {
+      "quote": "When you're building a category, you need to make sure there is a category validated by analysts and directory sites.",
+      "source": "Barbra Gago, Lenny's Podcast"
+    },
+    {
+      "quote": "A bad name with a really great company with great strategy and marketing is going to be great over time.",
+      "source": "Arielle Jackson, Lenny's Podcast"
+    },
+    {
+      "quote": "What's the thing your product does? Start there. That question alone will transform how you think about AI in your product.",
+      "source": "Paul Adams, Lenny's Podcast"
+    }
+  ],
+  "experimentation": [
+    {
+      "quote": "A prototype is essentially a way of checking your assumptions. Think about it at the strategy level.",
+      "source": "Janna Bastow, Lenny's Podcast"
+    },
+    {
+      "quote": "One easy, slippery slope is to keep thinking about complexities of the solution and forget the problem that you're trying to solve.",
       "source": "Aishwarya Naresh Reganti, Lenny's Podcast"
     },
     {
-      "quote": "I want someone that's going to champion and be a change agent to do things that may be hard but actually best for the long-term interest of the product.",
-      "source": "Anneka Gupta, Lenny's Podcast"
+      "quote": "We approached the team and said 'can we take this?' They said sure. And we immediately blew it up.",
+      "source": "Christopher Miller, Lenny's Podcast"
+    }
+  ],
+  "product_market_fit": [
+    {
+      "quote": "Start by assuming you no longer have product market fit, because you had product market fit in a different market. It's a different market now.",
+      "source": "Adam Grenier, Lenny's Podcast"
+    },
+    {
+      "quote": "We would ask founders 'who exactly is your target customer?' and three co-founders have three different answers.",
+      "source": "Jake Knapp, Lenny's Podcast"
+    },
+    {
+      "quote": "If I drill down what makes companies fail, it's quite simple. They don't talk to users, which means they don't find product market fit.",
+      "source": "Gustaf Alströmer, Lenny's Podcast"
+    },
+    {
+      "quote": "We called it sugar-coated broccoli. People don't want to eat the broccoli but people like sugar, so give them the sugar then hide your broccoli inside.",
+      "source": "Ivan Zhao, Lenny's Podcast"
+    }
+  ],
+  "tech_debt": [
+    {
+      "quote": "The issue for us was that we took people away from the investment in our core product. The trap is you leave yourself ripe for disruption in your core.",
+      "source": "Vijay Iyengar, Lenny's Podcast"
+    },
+    {
+      "quote": "Pain is the new moat. Going through the pain of learning, implementing, and understanding what works and what doesn't.",
+      "source": "Aishwarya Naresh Reganti, Lenny's Podcast"
+    },
+    {
+      "quote": "Every single day somebody is pushing code to production, you are making the product better or you're making the product worse.",
+      "source": "Varun Parmar, Lenny's Podcast"
+    }
+  ],
+  "leadership": [
+    {
+      "quote": "Leaders are in the details. There's this negative term called micromanagement. I think there's a difference between micromanagement and being in the details.",
+      "source": "Brian Chesky, Lenny's Podcast"
+    },
+    {
+      "quote": "I do not believe in being liked. I believe in being loved. And that's a very different thing.",
+      "source": "Ebi Atawodi, Lenny's Podcast"
+    },
+    {
+      "quote": "There is a ton of alignment built in. Something that comes from you feels a lot more familiar and easy to accept.",
+      "source": "Chandra Janakiraman, Lenny's Podcast"
     }
   ]
 }

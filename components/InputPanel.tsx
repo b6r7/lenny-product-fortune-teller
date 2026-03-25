@@ -2,6 +2,8 @@
 
 import { useState, useRef, type ChangeEvent } from "react"
 import { motion, AnimatePresence } from "framer-motion"
+import { extractTextFromImage } from "@/lib/ocr"
+import { extractContentFromUrl } from "@/lib/urlParser"
 
 type InputType = "describe" | "url" | "screenshot"
 
@@ -21,6 +23,8 @@ const InputPanel = ({ onSubmit }: InputPanelProps) => {
   const [urlInput, setUrlInput] = useState("")
   const [screenshot, setScreenshot] = useState<string | null>(null)
   const [fileName, setFileName] = useState("")
+  const [processing, setProcessing] = useState(false)
+  const [processingMessage, setProcessingMessage] = useState("")
   const fileRef = useRef<HTMLInputElement>(null)
 
   const hasInput =
@@ -28,21 +32,43 @@ const InputPanel = ({ onSubmit }: InputPanelProps) => {
     (activeTab === "url" && urlInput.trim().length > 0) ||
     (activeTab === "screenshot" && screenshot !== null)
 
-  const handleSubmit = () => {
-    if (!hasInput) return
-    let input = ""
-    switch (activeTab) {
-      case "describe":
-        input = textInput
-        break
-      case "url":
-        input = urlInput
-        break
-      case "screenshot":
-        input = fileName || "screenshot analysis"
-        break
+  const handleSubmit = async () => {
+    if (!hasInput || processing) return
+
+    if (activeTab === "describe") {
+      onSubmit(textInput.trim())
+      return
     }
-    onSubmit(input.trim())
+
+    if (activeTab === "url") {
+      setProcessing(true)
+      setProcessingMessage("Analyzing your link...")
+      try {
+        const content = await extractContentFromUrl(urlInput.trim())
+        onSubmit(content || urlInput.trim())
+      } catch {
+        onSubmit(urlInput.trim())
+      } finally {
+        setProcessing(false)
+        setProcessingMessage("")
+      }
+      return
+    }
+
+    if (activeTab === "screenshot" && screenshot) {
+      setProcessing(true)
+      setProcessingMessage("Reading your screenshot...")
+      try {
+        const ocrText = await extractTextFromImage(screenshot)
+        const finalInput = ocrText.length > 10 ? ocrText : fileName || "screenshot analysis"
+        onSubmit(finalInput)
+      } catch {
+        onSubmit(fileName || "screenshot analysis")
+      } finally {
+        setProcessing(false)
+        setProcessingMessage("")
+      }
+    }
   }
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
@@ -191,29 +217,53 @@ const InputPanel = ({ onSubmit }: InputPanelProps) => {
       {/* CTA */}
       <motion.button
         onClick={handleSubmit}
-        disabled={!hasInput}
+        disabled={!hasInput || processing}
         whileHover={
-          hasInput
+          hasInput && !processing
             ? {
                 scale: 1.02,
                 boxShadow: "0 0 40px rgba(245,196,81,0.18)",
               }
             : {}
         }
-        whileTap={hasInput ? { scale: 0.98 } : {}}
+        whileTap={hasInput && !processing ? { scale: 0.98 } : {}}
         aria-label="Deal the cards"
         tabIndex={0}
         className={`
           mt-6 w-full py-4 rounded-xl font-title text-lg tracking-wider
           transition-all duration-500 cursor-pointer
           ${
-            hasInput
+            hasInput && !processing
               ? "bg-gradient-to-r from-[#B8942E] via-[#F5C451] to-[#B8942E] text-[#0B0B0F] shadow-[0_0_30px_rgba(245,196,81,0.1)]"
               : "bg-white/[0.04] text-[#fefefe]/40 cursor-not-allowed"
           }
         `}
       >
-        → Deal the Cards
+        <AnimatePresence mode="wait">
+          {processing ? (
+            <motion.span
+              key="processing"
+              initial={{ opacity: 0, y: 4 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -4 }}
+              transition={{ duration: 0.2 }}
+              className="flex items-center justify-center gap-3"
+            >
+              <span className="inline-block w-4 h-4 border-2 border-[#fefefe]/40 border-t-[#fefefe] rounded-full animate-spin" />
+              {processingMessage}
+            </motion.span>
+          ) : (
+            <motion.span
+              key="deal"
+              initial={{ opacity: 0, y: 4 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -4 }}
+              transition={{ duration: 0.2 }}
+            >
+              → Deal the Cards
+            </motion.span>
+          )}
+        </AnimatePresence>
       </motion.button>
     </motion.div>
   )
