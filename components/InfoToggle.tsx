@@ -57,7 +57,7 @@ const InfoToggle = () => {
             className="absolute top-14 left-0 w-[290px] rounded-xl border border-[#F5C451]/20 bg-[#12121A]/95 backdrop-blur-md p-5 shadow-[0_8px_32px_rgba(0,0,0,0.5)]"
           >
             <p className="text-xs text-white/80 leading-relaxed">
-              <strong className="text-[#F5C451]/80">Lenny Rachitsky</strong> is one of the most
+              <strong className="text-[#F5C451]/80">Lenny Rachitsky</strong>{" "}is one of the most
               influential voices in product — author of Lenny&apos;s Newsletter and host of a
               top-tier podcast with founders and operators behind Airbnb, Stripe, and Figma.
             </p>
