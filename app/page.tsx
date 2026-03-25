@@ -16,13 +16,13 @@ const EASE_OUT_EXPO = [0.16, 1, 0.3, 1] as const
 
 const Home = () => {
   const [phase, setPhase] = useState<Phase>("input")
-  const [userInput, setUserInput] = useState("")
+  const [displayText, setDisplayText] = useState("")
   const [cards, setCards] = useState<ReadingCard[]>([])
 
-  const handleDeal = useCallback((input: string) => {
+  const handleDeal = useCallback((payload: { matchText: string; displayText: string }) => {
     playWhoosh()
-    setUserInput(input)
-    const reading = generateReading(input)
+    setDisplayText(payload.displayText)
+    const reading = generateReading(payload.matchText)
     setCards(reading)
     setPhase("loading")
   }, [])
@@ -34,7 +34,7 @@ const Home = () => {
   const handleReset = useCallback(() => {
     playWhoosh()
     setPhase("input")
-    setUserInput("")
+    setDisplayText("")
     setCards([])
   }, [])
 
@@ -106,7 +106,7 @@ const Home = () => {
             transition={{ duration: 0.6, ease: EASE_OUT_EXPO }}
             className="min-h-screen flex items-center justify-center px-4 py-12 sm:py-16 w-full"
           >
-            <Deck cards={cards} userInput={userInput} onReset={handleReset} />
+            <Deck cards={cards} userInput={displayText} onReset={handleReset} />
           </motion.div>
         )}
       </AnimatePresence>

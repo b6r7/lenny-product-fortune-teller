@@ -7,8 +7,13 @@ import { extractContentFromUrl } from "@/lib/urlParser"
 
 type InputType = "describe" | "url" | "screenshot"
 
+type SubmitPayload = {
+  matchText: string
+  displayText: string
+}
+
 type InputPanelProps = {
-  onSubmit: (input: string) => void
+  onSubmit: (payload: SubmitPayload) => void
 }
 
 const tabs: { id: InputType; label: string }[] = [
@@ -36,7 +41,8 @@ const InputPanel = ({ onSubmit }: InputPanelProps) => {
     if (!hasInput || processing) return
 
     if (activeTab === "describe") {
-      onSubmit(textInput.trim())
+      const text = textInput.trim()
+      onSubmit({ matchText: text, displayText: text })
       return
     }
 
@@ -45,9 +51,12 @@ const InputPanel = ({ onSubmit }: InputPanelProps) => {
       setProcessingMessage("Analyzing your link...")
       try {
         const content = await extractContentFromUrl(urlInput.trim())
-        onSubmit(content || urlInput.trim())
+        onSubmit({
+          matchText: content || urlInput.trim(),
+          displayText: urlInput.trim(),
+        })
       } catch {
-        onSubmit(urlInput.trim())
+        onSubmit({ matchText: urlInput.trim(), displayText: urlInput.trim() })
       } finally {
         setProcessing(false)
         setProcessingMessage("")
@@ -59,11 +68,13 @@ const InputPanel = ({ onSubmit }: InputPanelProps) => {
       setProcessing(true)
       setProcessingMessage("Reading your screenshot...")
       try {
-        const ocrText = await extractTextFromImage(screenshot)
-        const finalInput = ocrText.length > 10 ? ocrText : fileName || "screenshot analysis"
-        onSubmit(finalInput)
+        const result = await extractTextFromImage(screenshot)
+        onSubmit({
+          matchText: result.matchText || fileName || "screenshot",
+          displayText: result.displayText,
+        })
       } catch {
-        onSubmit(fileName || "screenshot analysis")
+        onSubmit({ matchText: fileName || "screenshot", displayText: "Uploaded screenshot" })
       } finally {
         setProcessing(false)
         setProcessingMessage("")
