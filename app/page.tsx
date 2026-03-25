@@ -145,6 +145,12 @@ const Home = () => {
           </motion.div>
         )}
       </AnimatePresence>
+
+      <footer className="fixed bottom-0 left-0 right-0 z-50 py-3 text-center pointer-events-none">
+        <p className="text-[12px] text-white/25 font-body tracking-wide">
+          Created by Bart Andrzejewski (asap@bartbeyond.art)
+        </p>
+      </footer>
     </main>
   )
 }
