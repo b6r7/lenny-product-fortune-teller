@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "framer-motion"
 import { toPng } from "html-to-image"
 import Card from "./Card"
 import VoiceLine from "./VoiceLine"
+import PlanView from "./PlanView"
 import ExportLayout from "./ExportLayout"
 import type { ReadingCard } from "@/lib/generateReading"
 import { playChime } from "@/lib/sounds"
@@ -19,6 +20,7 @@ const Deck = ({ cards, userInput, onReset }: DeckProps) => {
   const [flipped, setFlipped] = useState<Set<number>>(new Set())
   const [actionMode, setActionMode] = useState(false)
   const [exportFeedback, setExportFeedback] = useState(false)
+  const [showPlan, setShowPlan] = useState(false)
   const exportRef = useRef<HTMLDivElement>(null)
   const allRevealed = flipped.size === 3
 
@@ -186,7 +188,7 @@ const Deck = ({ cards, userInput, onReset }: DeckProps) => {
 
             {!actionMode && <VoiceLine />}
 
-            <div className="flex items-center gap-4">
+            <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-4">
               <motion.button
                 onClick={onReset}
                 onKeyDown={e => e.key === "Enter" && onReset()}
@@ -197,9 +199,24 @@ const Deck = ({ cards, userInput, onReset }: DeckProps) => {
                 whileTap={{ scale: 0.96 }}
                 aria-label="Ask again"
                 tabIndex={0}
-                className="px-10 py-3.5 rounded-xl border border-[rgba(245,196,81,0.2)] text-gold-mid font-title text-sm tracking-[0.15em] hover:bg-[rgba(245,196,81,0.06)] transition-all duration-300 cursor-pointer"
+                className="px-8 sm:px-10 py-3.5 rounded-xl border border-[rgba(245,196,81,0.2)] text-gold-mid font-title text-sm tracking-[0.15em] hover:bg-[rgba(245,196,81,0.06)] transition-all duration-300 cursor-pointer"
               >
                 → Ask Again
+              </motion.button>
+
+              <motion.button
+                onClick={() => setShowPlan(true)}
+                onKeyDown={e => e.key === "Enter" && setShowPlan(true)}
+                whileHover={{
+                  scale: 1.04,
+                  boxShadow: "0 0 24px rgba(91,46,255,0.12)",
+                }}
+                whileTap={{ scale: 0.96 }}
+                aria-label="Turn this into a plan"
+                tabIndex={0}
+                className="px-8 py-3.5 rounded-xl border border-[rgba(91,46,255,0.2)] text-purple-bright font-title text-sm tracking-[0.15em] hover:bg-[rgba(91,46,255,0.06)] transition-all duration-300 cursor-pointer"
+              >
+                Turn this into a plan
               </motion.button>
 
               <motion.button
@@ -222,6 +239,13 @@ const Deck = ({ cards, userInput, onReset }: DeckProps) => {
               </motion.button>
             </div>
           </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Plan view */}
+      <AnimatePresence>
+        {showPlan && allRevealed && (
+          <PlanView cards={cards} onClose={() => setShowPlan(false)} />
         )}
       </AnimatePresence>
 
