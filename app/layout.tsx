@@ -2,6 +2,7 @@ import type { Metadata } from "next"
 import { Cinzel, Cormorant_Garamond, Outfit } from "next/font/google"
 import "./globals.css"
 import MuteToggle from "@/components/MuteToggle"
+import InfoToggle from "@/components/InfoToggle"
 import Particles from "@/components/Particles"
 
 const cinzel = Cinzel({
@@ -44,6 +45,7 @@ const RootLayout = ({
     >
       <body className="grain min-h-screen">
         <Particles />
+        <InfoToggle />
         <MuteToggle />
         {children}
       </body>
