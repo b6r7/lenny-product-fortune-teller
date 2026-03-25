@@ -1,0 +1,114 @@
+{
+  "onboarding": [
+    {
+      "quote": "Onboarding is the only part of your product experience that a hundred percent of people are ever going to touch.",
+      "source": "Adam Fishman, Lenny's Podcast"
+    },
+    {
+      "quote": "Your brand is the promise you're making and your product experience is your delivery of that promise. Those two things have to be in lockstep.",
+      "source": "Adam Fishman, Lenny's Podcast"
+    },
+    {
+      "quote": "If you're not prototyping and building to see what you want to build, I think you're doing it wrong.",
+      "source": "Aparna Chennapragada, Lenny's Podcast"
+    }
+  ],
+  "growth": [
+    {
+      "quote": "Growth as the job is to connect users to the value of your product. Growth sometimes gets this reputation that it's just pure metrics hacking.",
+      "source": "Albert Cheng, Lenny's Podcast"
+    },
+    {
+      "quote": "Start by assuming you no longer have product market fit, because you had product market fit in a different market.",
+      "source": "Adam Grenier, Lenny's Podcast"
+    },
+    {
+      "quote": "We rarely scale a project until we know the Sean Ellis score hit a threshold that we find really compelling.",
+      "source": "Jag Duggal, Lenny's Podcast"
+    }
+  ],
+  "retention": [
+    {
+      "quote": "User retention is gold for consumer subscription companies. If you don't retain your users, then a lot of the onus is on getting them to pay on day one.",
+      "source": "Albert Cheng, Lenny's Podcast"
+    },
+    {
+      "quote": "In product-led sales, product acquires and activates a customer and product creates pipeline for sales.",
+      "source": "Elena Verna, Lenny's Podcast"
+    },
+    {
+      "quote": "Good luck getting a hundred percent feature adoption of anything else in your product.",
+      "source": "Adam Fishman, Lenny's Podcast"
+    }
+  ],
+  "pricing": [
+    {
+      "quote": "The good founders need to be able to dominate both market share and wallet share. It is not a choice. You need to get better at both.",
+      "source": "Madhavan Ramanujam, Lenny's Podcast"
+    },
+    {
+      "quote": "Do not set it and forget it. Think about your pricing just like you do your roadmap. Every 6 to 12 months, there's probably something meaningful you're leaving on the table.",
+      "source": "Naomi Ionita, Lenny's Podcast"
+    },
+    {
+      "quote": "The most powerful unquantifiable things in the world of business are fun and delight.",
+      "source": "Tobi Lütke, Lenny's Podcast"
+    }
+  ],
+  "strategy": [
+    {
+      "quote": "What everyone really wants is clarity. And what everyone really wants is to be able to row in the same direction really quickly.",
+      "source": "Brian Chesky, Lenny's Podcast"
+    },
+    {
+      "quote": "When people say 'I want someone strategic,' what they really mean is 'I want someone who can articulate a compelling why behind the decisions.'",
+      "source": "Anneka Gupta, Lenny's Podcast"
+    },
+    {
+      "quote": "Way too many founders apologize for how they want to run the company. That's a good way to make everyone miserable. Because what everyone really wants is clarity.",
+      "source": "Brian Chesky, Lenny's Podcast"
+    }
+  ],
+  "focus": [
+    {
+      "quote": "We took people away from the investment in our core product to go do those other things. The trap is that you leave yourself ripe for disruption.",
+      "source": "Vijay Iyengar, Lenny's Podcast"
+    },
+    {
+      "quote": "It starts with adding little features here and there, making little cosmetic improvements until the next round of layoffs.",
+      "source": "Matt LeMay, Lenny's Podcast"
+    },
+    {
+      "quote": "Your job is figuring out what the algorithm should be responsible for, what people are responsible for, and the framework for making those decisions.",
+      "source": "Adriel Frederick, Lenny's Podcast"
+    }
+  ],
+  "metrics": [
+    {
+      "quote": "The algorithms don't understand long-term effects often, nor do they understand how people might respond to it.",
+      "source": "Adriel Frederick, Lenny's Podcast"
+    },
+    {
+      "quote": "There is no such thing as a long feedback loop. The way you choose to shorten it is to say, what are the things correlated with the outcome that I eventually desire?",
+      "source": "Annie Duke, Lenny's Podcast"
+    },
+    {
+      "quote": "Most people tend to ignore the non-determinism. You don't know how the user might behave with your product.",
+      "source": "Aishwarya Naresh Reganti, Lenny's Podcast"
+    }
+  ],
+  "user_research": [
+    {
+      "quote": "Pessimism sounds extremely sophisticated. Optimism always sounds dumb or at least naive.",
+      "source": "Tobi Lütke, Lenny's Podcast"
+    },
+    {
+      "quote": "Every time you hand over decision-making capabilities to agentic systems, you're relinquishing some amount of control on your end.",
+      "source": "Aishwarya Naresh Reganti, Lenny's Podcast"
+    },
+    {
+      "quote": "I want someone that's going to champion and be a change agent to do things that may be hard but actually best for the long-term interest of the product.",
+      "source": "Anneka Gupta, Lenny's Podcast"
+    }
+  ]
+}

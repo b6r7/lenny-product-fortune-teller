@@ -1,65 +1,97 @@
-import Image from "next/image";
+"use client"
 
-export default function Home() {
+import { useState, useCallback } from "react"
+import { AnimatePresence, motion } from "framer-motion"
+import Background from "@/components/Background"
+import InputPanel from "@/components/InputPanel"
+import LoadingScreen from "@/components/LoadingScreen"
+import Deck from "@/components/Deck"
+import { generateReading, type ReadingCard } from "@/lib/generateReading"
+import { playWhoosh } from "@/lib/sounds"
+
+type Phase = "input" | "loading" | "reveal"
+
+const Home = () => {
+  const [phase, setPhase] = useState<Phase>("input")
+  const [userInput, setUserInput] = useState("")
+  const [cards, setCards] = useState<ReadingCard[]>([])
+
+  const handleDeal = useCallback((input: string) => {
+    playWhoosh()
+    setUserInput(input)
+    const reading = generateReading(input)
+    setCards(reading)
+    setPhase("loading")
+  }, [])
+
+  const handleLoadingComplete = useCallback(() => {
+    setPhase("reveal")
+  }, [])
+
+  const handleReset = useCallback(() => {
+    playWhoosh()
+    setPhase("input")
+    setUserInput("")
+    setCards([])
+  }, [])
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+    <main className="relative min-h-screen flex flex-col items-center justify-center px-4 py-12 sm:py-16">
+      <Background />
+
+      <AnimatePresence mode="wait">
+        {phase === "input" && (
+          <motion.div
+            key="input"
+            initial={{ opacity: 0, scale: 0.98 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 1.03, filter: "brightness(0.6)" }}
+            transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+            className="flex flex-col items-center gap-8 w-full"
           >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+            {/* Title block */}
+            <motion.div
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+              className="text-center mb-2"
+            >
+              <h1 className="font-title text-4xl sm:text-5xl md:text-6xl lg:text-7xl bg-clip-text text-transparent bg-gradient-to-r from-[#B8942E] via-[#FFE08A] to-[#B8942E] mb-5 leading-tight pb-1">
+                Lenny the Fortune Teller
+              </h1>
+              <motion.p
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.4, duration: 0.8 }}
+                className="font-serif text-lg sm:text-xl text-text-secondary/60 italic"
+              >
+                Describe your situation. Lenny will deal the cards.
+              </motion.p>
+            </motion.div>
+
+            <InputPanel onSubmit={handleDeal} />
+          </motion.div>
+        )}
+
+        {phase === "loading" && (
+          <LoadingScreen key="loading" onComplete={handleLoadingComplete} />
+        )}
+
+        {phase === "reveal" && (
+          <motion.div
+            key="reveal"
+            initial={{ opacity: 0, scale: 0.97 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, y: 20 }}
+            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+            className="w-full"
           >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
-  );
+            <Deck cards={cards} userInput={userInput} onReset={handleReset} />
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </main>
+  )
 }
+
+export default Home
