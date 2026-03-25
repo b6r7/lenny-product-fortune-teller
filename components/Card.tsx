@@ -2,9 +2,10 @@
 
 import { useState, useEffect, useMemo, useCallback, useRef } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import Image from "next/image"
 import type { ReadingCard } from "@/lib/generateReading"
 import { playFlip } from "@/lib/sounds"
+
+const BASE_PATH = process.env.NODE_ENV === "production" ? "/lenny-product-fortune-teller" : ""
 
 type CardProps = {
   card: ReadingCard
@@ -293,14 +294,12 @@ const Card = ({ card, index, isFlipped, onFlip, allRevealed, actionMode }: CardP
                   }
                   transition={{ duration: 0.8, ease: "easeOut" }}
                 >
-                  <Image
-                    src={card.image!}
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={`${BASE_PATH}${card.image!}`}
                     alt=""
-                    fill
-                    className="object-cover"
+                    className="absolute inset-0 w-full h-full object-cover"
                     style={{ filter: "saturate(0.9) contrast(1.05)" }}
-                    sizes="(max-width: 640px) 224px, 256px"
-                    priority={index === 0}
                   />
                   <div
                     className="absolute inset-x-0 top-0 h-[38%]"

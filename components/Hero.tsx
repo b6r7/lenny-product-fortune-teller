@@ -2,7 +2,8 @@
 
 import { useState, useEffect } from "react"
 import { motion } from "framer-motion"
-import Image from "next/image"
+
+const BASE_PATH = process.env.NODE_ENV === "production" ? "/lenny-product-fortune-teller" : ""
 
 const PARTICLE_COUNT = 20
 
@@ -49,12 +50,11 @@ const Hero = () => {
         style={{ transform: `translateY(${scrollY * 0.12}px)` }}
       >
         <div className="absolute inset-0 animate-hero-float">
-          <Image
-            src="/hero/lenny-wizard.png"
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={`${BASE_PATH}/hero/lenny-wizard.png`}
             alt="Lenny the Fortune Teller gazing into a crystal ball"
-            fill
-            priority
-            className="object-cover object-[center_20%]"
+            className="absolute inset-0 w-full h-full object-cover object-[center_20%]"
             style={{
               maskImage:
                 "linear-gradient(to bottom, black 0%, black 50%, transparent 95%)",
