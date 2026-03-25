@@ -1,2 +1,2 @@
-:HL["/lenny-product-fortune-teller/_next/static/chunks/0xaksgk3gfzy..css","style"]
-0:{"tree":{"name":"","param":null,"prefetchHints":16,"slots":{"children":{"name":"/_not-found","param":null,"prefetchHints":0,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":0,"slots":null}}}}},"staleTime":300,"buildId":"n8z6w2IqSmVpjAT14TC3J"}
+:HL["/lenny-product-fortune-teller/_next/static/chunks/012jdt6dqv2-z.css","style"]
+0:{"tree":{"name":"","param":null,"prefetchHints":16,"slots":{"children":{"name":"/_not-found","param":null,"prefetchHints":0,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":0,"slots":null}}}}},"staleTime":300,"buildId":"mBkKX2Rp_cip9tEcuYg2j"}

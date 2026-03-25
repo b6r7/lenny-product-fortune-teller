@@ -1,6 +1,6 @@
-:HL["/lenny-product-fortune-teller/_next/static/chunks/0xaksgk3gfzy..css","style"]
+:HL["/lenny-product-fortune-teller/_next/static/chunks/012jdt6dqv2-z.css","style"]
 :HL["/lenny-product-fortune-teller/_next/static/media/01e4147cff8141ee-s.p.10ked.7w885.g.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
 :HL["/lenny-product-fortune-teller/_next/static/media/1b99372b3eaef0c8-s.p.0gx2haw2tmll8.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
 :HL["/lenny-product-fortune-teller/_next/static/media/8bd76523131fa0fc-s.p.0jox806dnq5~c.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
 :HL["/lenny-product-fortune-teller/_next/static/media/cc014fcb166cf364-s.p.0rbrcy8kuidpb.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
-0:{"tree":{"name":"","param":null,"prefetchHints":16,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":0,"slots":null}}},"staleTime":300,"buildId":"n8z6w2IqSmVpjAT14TC3J"}
+0:{"tree":{"name":"","param":null,"prefetchHints":16,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":0,"slots":null}}},"staleTime":300,"buildId":"mBkKX2Rp_cip9tEcuYg2j"}
