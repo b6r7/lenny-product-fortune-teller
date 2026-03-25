@@ -1,9 +1,9 @@
 1:"$Sreact.fragment"
-2:I[47257,["/lenny-product-fortune-teller/_next/static/chunks/064t4w74i.8hm.js","/lenny-product-fortune-teller/_next/static/chunks/0ss54u.6uzocv.js","/lenny-product-fortune-teller/_next/static/chunks/0dbhjjzl8qfwv.js"],"ClientPageRoot"]
-3:I[31713,["/lenny-product-fortune-teller/_next/static/chunks/064t4w74i.8hm.js","/lenny-product-fortune-teller/_next/static/chunks/0ss54u.6uzocv.js","/lenny-product-fortune-teller/_next/static/chunks/0dbhjjzl8qfwv.js","/lenny-product-fortune-teller/_next/static/chunks/0qhy.l7~pg1h0.js"],"default"]
-6:I[97367,["/lenny-product-fortune-teller/_next/static/chunks/064t4w74i.8hm.js","/lenny-product-fortune-teller/_next/static/chunks/0ss54u.6uzocv.js","/lenny-product-fortune-teller/_next/static/chunks/0dbhjjzl8qfwv.js"],"OutletBoundary"]
+2:I[47257,["/lenny-product-fortune-teller/_next/static/chunks/176zg3pi4nnqo.js","/lenny-product-fortune-teller/_next/static/chunks/0ss54u.6uzocv.js","/lenny-product-fortune-teller/_next/static/chunks/0dbhjjzl8qfwv.js"],"ClientPageRoot"]
+3:I[31713,["/lenny-product-fortune-teller/_next/static/chunks/176zg3pi4nnqo.js","/lenny-product-fortune-teller/_next/static/chunks/0ss54u.6uzocv.js","/lenny-product-fortune-teller/_next/static/chunks/0dbhjjzl8qfwv.js","/lenny-product-fortune-teller/_next/static/chunks/0qhy.l7~pg1h0.js"],"default"]
+6:I[97367,["/lenny-product-fortune-teller/_next/static/chunks/176zg3pi4nnqo.js","/lenny-product-fortune-teller/_next/static/chunks/0ss54u.6uzocv.js","/lenny-product-fortune-teller/_next/static/chunks/0dbhjjzl8qfwv.js"],"OutletBoundary"]
 7:"$Sreact.suspense"
-0:{"rsc":["$","$1","c",{"children":[["$","$L2",null,{"Component":"$3","serverProvidedParams":{"searchParams":{},"params":{},"promises":["$@4","$@5"]}}],[["$","script","script-0",{"src":"/lenny-product-fortune-teller/_next/static/chunks/0qhy.l7~pg1h0.js","async":true}]],["$","$L6",null,{"children":["$","$7",null,{"name":"Next.MetadataOutlet","children":"$@8"}]}]]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"XYdcQLLt5ogEN4t75Iell"}
+0:{"rsc":["$","$1","c",{"children":[["$","$L2",null,{"Component":"$3","serverProvidedParams":{"searchParams":{},"params":{},"promises":["$@4","$@5"]}}],[["$","script","script-0",{"src":"/lenny-product-fortune-teller/_next/static/chunks/0qhy.l7~pg1h0.js","async":true}]],["$","$L6",null,{"children":["$","$7",null,{"name":"Next.MetadataOutlet","children":"$@8"}]}]]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"pFJMNYhgwHQz5Ply5JM4Q"}
 4:{}
 5:"$0:rsc:props:children:0:props:serverProvidedParams:params"
 8:null

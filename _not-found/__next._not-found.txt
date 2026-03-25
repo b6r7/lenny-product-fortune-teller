@@ -1,5 +1,5 @@
 1:"$Sreact.fragment"
-2:I[39756,["/lenny-product-fortune-teller/_next/static/chunks/064t4w74i.8hm.js","/lenny-product-fortune-teller/_next/static/chunks/0ss54u.6uzocv.js","/lenny-product-fortune-teller/_next/static/chunks/0dbhjjzl8qfwv.js"],"default"]
-3:I[37457,["/lenny-product-fortune-teller/_next/static/chunks/064t4w74i.8hm.js","/lenny-product-fortune-teller/_next/static/chunks/0ss54u.6uzocv.js","/lenny-product-fortune-teller/_next/static/chunks/0dbhjjzl8qfwv.js"],"default"]
+2:I[39756,["/lenny-product-fortune-teller/_next/static/chunks/176zg3pi4nnqo.js","/lenny-product-fortune-teller/_next/static/chunks/0ss54u.6uzocv.js","/lenny-product-fortune-teller/_next/static/chunks/0dbhjjzl8qfwv.js"],"default"]
+3:I[37457,["/lenny-product-fortune-teller/_next/static/chunks/176zg3pi4nnqo.js","/lenny-product-fortune-teller/_next/static/chunks/0ss54u.6uzocv.js","/lenny-product-fortune-teller/_next/static/chunks/0dbhjjzl8qfwv.js"],"default"]
 4:[]
-0:{"rsc":["$","$1","c",{"children":[null,["$","$L2",null,{"parallelRouterKey":"children","template":["$","$L3",null,{}]}]]}],"isPartial":false,"staleTime":300,"varyParams":"$W4","buildId":"XYdcQLLt5ogEN4t75Iell"}
+0:{"rsc":["$","$1","c",{"children":[null,["$","$L2",null,{"parallelRouterKey":"children","template":["$","$L3",null,{}]}]]}],"isPartial":false,"staleTime":300,"varyParams":"$W4","buildId":"pFJMNYhgwHQz5Ply5JM4Q"}
