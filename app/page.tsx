@@ -7,23 +7,42 @@ import Hero from "@/components/Hero"
 import InputPanel from "@/components/InputPanel"
 import LoadingScreen from "@/components/LoadingScreen"
 import Deck from "@/components/Deck"
-import { generateReading, type ReadingCard } from "@/lib/generateReading"
+import { generateReading, type ReadingCard, type ReadingConfidence } from "@/lib/generateReading"
 import { playWhoosh } from "@/lib/sounds"
 
 type Phase = "input" | "loading" | "reveal"
 
 const EASE_OUT_EXPO = [0.16, 1, 0.3, 1] as const
 
+const NUDGE_LINES = [
+  "The cards need something real to work with.",
+  "Lenny can\u2019t read your fortune without a product problem.",
+  "Try describing a real situation \u2014 the cards will know what to do.",
+  "That\u2019s not enough for the deck. Tell Lenny about your product.",
+]
+
 const Home = () => {
   const [phase, setPhase] = useState<Phase>("input")
   const [displayText, setDisplayText] = useState("")
   const [cards, setCards] = useState<ReadingCard[]>([])
+  const [confidence, setConfidence] = useState<ReadingConfidence>("low")
+  const [nudge, setNudge] = useState("")
 
   const handleDeal = useCallback((payload: { matchText: string; displayText: string }) => {
+    setNudge("")
+
+    const result = generateReading(payload.matchText)
+
+    if (!result) {
+      const line = NUDGE_LINES[Math.floor(Math.random() * NUDGE_LINES.length)]
+      setNudge(line)
+      return
+    }
+
     playWhoosh()
     setDisplayText(payload.displayText)
-    const reading = generateReading(payload.matchText)
-    setCards(reading)
+    setCards(result.cards)
+    setConfidence(result.confidence)
     setPhase("loading")
   }, [])
 
@@ -36,6 +55,8 @@ const Home = () => {
     setPhase("input")
     setDisplayText("")
     setCards([])
+    setConfidence("low")
+    setNudge("")
   }, [])
 
   return (
@@ -84,6 +105,20 @@ const Home = () => {
               </motion.p>
 
               <InputPanel onSubmit={handleDeal} />
+
+              <AnimatePresence>
+                {nudge && (
+                  <motion.p
+                    initial={{ opacity: 0, y: 6 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -4 }}
+                    transition={{ duration: 0.35 }}
+                    className="font-serif text-sm text-[rgba(245,196,81,0.65)] italic text-center max-w-md"
+                  >
+                    {nudge}
+                  </motion.p>
+                )}
+              </AnimatePresence>
             </div>
           </motion.div>
         )}
@@ -106,7 +141,7 @@ const Home = () => {
             transition={{ duration: 0.6, ease: EASE_OUT_EXPO }}
             className="min-h-screen flex items-center justify-center px-4 py-12 sm:py-16 w-full"
           >
-            <Deck cards={cards} userInput={displayText} onReset={handleReset} />
+            <Deck cards={cards} userInput={displayText} confidence={confidence} onReset={handleReset} />
           </motion.div>
         )}
       </AnimatePresence>

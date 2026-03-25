@@ -5,11 +5,49 @@ export type ReadingCard = CardData & {
   quote: InsightQuote | null
 }
 
+export type ReadingConfidence = "high" | "medium" | "low"
+
+export type ReadingResult = {
+  cards: ReadingCard[]
+  confidence: ReadingConfidence
+} | null
+
 const PHRASE_WEIGHT = 4
 const KEYWORD_WEIGHT = 2
 const SYNONYM_WEIGHT = 1
 
 const GENERAL_FALLBACK_IDS = ["bluff", "echo", "premature"]
+
+const PRODUCT_SIGNALS = new Set([
+  "user", "users", "product", "feature", "features", "onboarding", "churn",
+  "retention", "growth", "metric", "metrics", "data", "conversion", "funnel",
+  "signup", "activation", "pricing", "revenue", "customer", "customers",
+  "feedback", "roadmap", "sprint", "ship", "deploy", "launch", "mvp",
+  "strategy", "team", "priority", "priorities", "scale", "optimize",
+  "dashboard", "analytics", "kpi", "engagement", "acquisition", "ltv",
+  "arpu", "nps", "saas", "b2b", "b2c", "marketplace", "platform",
+  "app", "website", "landing", "page", "flow", "experience", "ux",
+  "design", "interface", "navigation", "button", "cta", "form",
+  "checkout", "cart", "subscription", "trial", "freemium", "paywall",
+  "notification", "email", "campaign", "segment", "cohort", "ab",
+  "test", "experiment", "hypothesis", "iteration", "backlog", "debt",
+  "bug", "error", "drop", "bounce", "session", "click", "scroll",
+  "search", "filter", "sort", "settings", "profile", "account",
+  "login", "register", "password", "integration", "api", "webhook",
+  "pipeline", "infrastructure", "migration", "refactor", "legacy",
+  "stakeholder", "alignment", "okr", "goal", "initiative", "project",
+  "release", "version", "beta", "alpha", "prototype", "wireframe",
+  "mockup", "spec", "requirement", "scope", "budget", "timeline",
+  "competitor", "market", "positioning", "brand", "messaging",
+  "target", "audience", "persona", "segment", "niche", "vertical",
+  "enterprise", "startup", "founder", "ceo", "cto", "cpo", "pm",
+  "engineer", "developer", "designer", "marketer", "sales",
+  "support", "success", "hire", "hiring", "interview", "candidate",
+  "performance", "review", "feedback", "survey", "research",
+  "problem", "solution", "value", "proposition", "hypothesis",
+  "validate", "invalidate", "pivot", "iterate", "build", "measure",
+  "learn", "agile", "lean", "kanban", "scrum", "ceremony",
+])
 
 const tokenize = (text: string): string[] =>
   text
@@ -17,6 +55,15 @@ const tokenize = (text: string): string[] =>
     .replace(/[^a-z0-9\s'-]/g, " ")
     .split(/\s+/)
     .filter(w => w.length > 1)
+
+const hasProductSignal = (words: string[]): boolean => {
+  let signalCount = 0
+  for (const word of words) {
+    if (PRODUCT_SIGNALS.has(word)) signalCount++
+    if (signalCount >= 1) return true
+  }
+  return false
+}
 
 const scoreCard = (input: string, card: CardData): number => {
   const lower = input.toLowerCase()
@@ -76,14 +123,19 @@ const pickDiverse = (scored: { card: CardData; score: number }[]): CardData[] =>
   return selected
 }
 
-export const generateReading = (input: string): ReadingCard[] => {
-  if (!input || input.trim().length === 0) {
-    const shuffled = [...CARDS].sort(() => Math.random() - 0.5)
-    return shuffled.slice(0, 3).map(card => ({
-      ...card,
-      quote: getQuoteForCard(card),
-    }))
-  }
+const toConfidence = (totalScore: number): ReadingConfidence => {
+  if (totalScore >= 8) return "high"
+  if (totalScore >= 3) return "medium"
+  return "low"
+}
+
+export const generateReading = (input: string): ReadingResult => {
+  if (!input || input.trim().length === 0) return null
+
+  const words = tokenize(input)
+
+  if (words.length < 2) return null
+  if (!hasProductSignal(words)) return null
 
   const scored = CARDS.map(card => ({
     card,
@@ -98,10 +150,13 @@ export const generateReading = (input: string): ReadingCard[] => {
     remaining.sort(() => Math.random() - 0.5)
     const selected = [...fallbackCards.slice(0, 2), remaining[0]].sort(() => Math.random() - 0.5)
 
-    return selected.map(card => ({
-      ...card,
-      quote: getQuoteForCard(card),
-    }))
+    return {
+      cards: selected.map(card => ({
+        ...card,
+        quote: getQuoteForCard(card),
+      })),
+      confidence: "low",
+    }
   }
 
   scored.sort((a, b) => {
@@ -110,11 +165,17 @@ export const generateReading = (input: string): ReadingCard[] => {
   })
 
   const selected = pickDiverse(scored)
+  const totalScore = scored
+    .filter(s => selected.includes(s.card))
+    .reduce((sum, s) => sum + s.score, 0)
 
   selected.sort(() => Math.random() - 0.5)
 
-  return selected.map(card => ({
-    ...card,
-    quote: getQuoteForCard(card),
-  }))
+  return {
+    cards: selected.map(card => ({
+      ...card,
+      quote: getQuoteForCard(card),
+    })),
+    confidence: toConfidence(totalScore),
+  }
 }

@@ -7,16 +7,17 @@ import Card from "./Card"
 import VoiceLine from "./VoiceLine"
 import PlanView from "./PlanView"
 import ExportLayout from "./ExportLayout"
-import type { ReadingCard } from "@/lib/generateReading"
+import type { ReadingCard, ReadingConfidence } from "@/lib/generateReading"
 import { playChime } from "@/lib/sounds"
 
 type DeckProps = {
   cards: ReadingCard[]
   userInput: string
+  confidence: ReadingConfidence
   onReset: () => void
 }
 
-const Deck = ({ cards, userInput, onReset }: DeckProps) => {
+const Deck = ({ cards, userInput, confidence, onReset }: DeckProps) => {
   const [flipped, setFlipped] = useState<Set<number>>(new Set())
   const [actionMode, setActionMode] = useState(false)
   const [exportFeedback, setExportFeedback] = useState(false)
@@ -167,6 +168,17 @@ const Deck = ({ cards, userInput, onReset }: DeckProps) => {
             transition={{ delay: 0.9, duration: 0.7 }}
             className="flex flex-col items-center gap-6 mt-4"
           >
+            {confidence === "low" && (
+              <motion.p
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 0.5 }}
+                transition={{ delay: 0.4, duration: 0.5 }}
+                className="font-serif text-xs text-[rgba(245,196,81,0.45)] italic text-center max-w-sm"
+              >
+                Lenny&apos;s guessing here. Try being more specific next time.
+              </motion.p>
+            )}
+
             <AnimatePresence mode="wait">
               <motion.p
                 key={actionMode ? "action-headline" : "mystic-headline"}
@@ -204,20 +216,22 @@ const Deck = ({ cards, userInput, onReset }: DeckProps) => {
                 → Ask Again
               </motion.button>
 
-              <motion.button
-                onClick={() => setShowPlan(true)}
-                onKeyDown={e => e.key === "Enter" && setShowPlan(true)}
-                whileHover={{
-                  scale: 1.04,
-                  boxShadow: "0 0 24px rgba(91,46,255,0.12)",
-                }}
-                whileTap={{ scale: 0.96 }}
-                aria-label="Turn this into a plan"
-                tabIndex={0}
-                className="px-8 py-3.5 rounded-xl border border-[rgba(91,46,255,0.2)] text-purple-bright font-title text-sm tracking-[0.15em] hover:bg-[rgba(91,46,255,0.06)] transition-all duration-300 cursor-pointer"
-              >
-                Turn this into a plan
-              </motion.button>
+              {confidence !== "low" && (
+                <motion.button
+                  onClick={() => setShowPlan(true)}
+                  onKeyDown={e => e.key === "Enter" && setShowPlan(true)}
+                  whileHover={{
+                    scale: 1.04,
+                    boxShadow: "0 0 24px rgba(91,46,255,0.12)",
+                  }}
+                  whileTap={{ scale: 0.96 }}
+                  aria-label="Turn this into a plan"
+                  tabIndex={0}
+                  className="px-8 py-3.5 rounded-xl border border-[rgba(91,46,255,0.2)] text-purple-bright font-title text-sm tracking-[0.15em] hover:bg-[rgba(91,46,255,0.06)] transition-all duration-300 cursor-pointer"
+                >
+                  Turn this into a plan
+                </motion.button>
+              )}
 
               <motion.button
                 onClick={handleExport}
