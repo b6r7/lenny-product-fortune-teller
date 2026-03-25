@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "framer-motion"
 import { toPng } from "html-to-image"
 import Card from "./Card"
 import VoiceLine from "./VoiceLine"
+import ExportLayout from "./ExportLayout"
 import type { ReadingCard } from "@/lib/generateReading"
 import { playChime } from "@/lib/sounds"
 
@@ -17,7 +18,6 @@ type DeckProps = {
 const Deck = ({ cards, userInput, onReset }: DeckProps) => {
   const [flipped, setFlipped] = useState<Set<number>>(new Set())
   const [actionMode, setActionMode] = useState(false)
-  const [isExporting, setIsExporting] = useState(false)
   const [exportFeedback, setExportFeedback] = useState(false)
   const exportRef = useRef<HTMLDivElement>(null)
   const allRevealed = flipped.size === 3
@@ -37,17 +37,14 @@ const Deck = ({ cards, userInput, onReset }: DeckProps) => {
   }
 
   const handleExport = useCallback(async () => {
-    if (!exportRef.current || isExporting) return
-
-    setIsExporting(true)
-
-    await new Promise(r => setTimeout(r, 200))
+    if (!exportRef.current) return
 
     try {
       const dataUrl = await toPng(exportRef.current, {
         cacheBust: true,
         pixelRatio: 2,
-        backgroundColor: "#000000",
+        width: 1200,
+        height: 1600,
       })
 
       const link = document.createElement("a")
@@ -56,13 +53,11 @@ const Deck = ({ cards, userInput, onReset }: DeckProps) => {
       link.click()
 
       setExportFeedback(true)
-      setTimeout(() => setExportFeedback(false), 2000)
+      setTimeout(() => setExportFeedback(false), 2500)
     } catch (err) {
       console.error("Export failed:", err)
-    } finally {
-      setIsExporting(false)
     }
-  }, [isExporting])
+  }, [])
 
   return (
     <motion.div
@@ -70,20 +65,17 @@ const Deck = ({ cards, userInput, onReset }: DeckProps) => {
       animate={{ opacity: 1 }}
       className="flex flex-col items-center gap-8 sm:gap-12 py-8"
     >
-      {/* Controls hidden during export */}
-      {!isExporting && (
-        <motion.p
-          initial={{ opacity: 0, y: -10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.1 }}
-          className="font-serif text-base sm:text-lg text-[#fefefe]/70 italic text-center max-w-lg px-4"
-        >
-          &ldquo;{userInput}&rdquo;
-        </motion.p>
-      )}
+      <motion.p
+        initial={{ opacity: 0, y: -10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.1 }}
+        className="font-serif text-base sm:text-lg text-[#fefefe]/70 italic text-center max-w-lg px-4"
+      >
+        &ldquo;{userInput}&rdquo;
+      </motion.p>
 
       <AnimatePresence>
-        {!allRevealed && !isExporting && (
+        {!allRevealed && (
           <motion.p
             initial={{ opacity: 0 }}
             animate={{ opacity: 0.5 }}
@@ -98,7 +90,7 @@ const Deck = ({ cards, userInput, onReset }: DeckProps) => {
 
       {/* Mode toggle */}
       <AnimatePresence>
-        {allRevealed && !isExporting && (
+        {allRevealed && (
           <motion.div
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
@@ -149,55 +141,24 @@ const Deck = ({ cards, userInput, onReset }: DeckProps) => {
         )}
       </AnimatePresence>
 
-      {/* ═══ EXPORTABLE AREA ═══ */}
-      <div
-        ref={exportRef}
-        className="flex flex-col items-center"
-        style={isExporting ? { padding: "48px 32px", background: "#000" } : undefined}
-      >
-        {/* Export-only header */}
-        {isExporting && (
-          <div className="text-center mb-8">
-            <p className="font-title text-lg tracking-[0.2em] bg-clip-text text-transparent bg-gradient-to-r from-[#B8942E] via-[#FFE08A] to-[#B8942E]">
-              Lenny the Fortune Teller
-            </p>
-            <p className="font-serif text-xs text-[#fefefe]/50 italic mt-1.5">
-              Your reading — the truth of your product
-            </p>
-            {userInput && (
-              <p className="font-body text-[11px] text-[#fefefe]/35 mt-3 max-w-md mx-auto italic">
-                &ldquo;{userInput}&rdquo;
-              </p>
-            )}
-          </div>
-        )}
-
-        <div className={`flex flex-col sm:flex-row items-center ${isExporting ? "gap-6" : "gap-6 sm:gap-8"}`}>
-          {cards.map((card, i) => (
-            <Card
-              key={card.id}
-              card={card}
-              index={i}
-              isFlipped={isExporting ? true : flipped.has(i)}
-              onFlip={() => handleFlip(i)}
-              allRevealed={isExporting ? true : allRevealed}
-              actionMode={actionMode}
-              isExporting={isExporting}
-            />
-          ))}
-        </div>
-
-        {/* Export-only footer */}
-        {isExporting && (
-          <p className="font-title text-[9px] uppercase tracking-[0.25em] text-[rgba(245,196,81,0.3)] mt-8">
-            {actionMode ? "Now go do something about it." : "You knew at least one of these already."}
-          </p>
-        )}
+      {/* Cards */}
+      <div className="flex flex-col sm:flex-row items-center gap-6 sm:gap-8">
+        {cards.map((card, i) => (
+          <Card
+            key={card.id}
+            card={card}
+            index={i}
+            isFlipped={flipped.has(i)}
+            onFlip={() => handleFlip(i)}
+            allRevealed={allRevealed}
+            actionMode={actionMode}
+          />
+        ))}
       </div>
 
       {/* Bottom actions */}
       <AnimatePresence>
-        {allRevealed && !isExporting && (
+        {allRevealed && (
           <motion.div
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
@@ -249,7 +210,7 @@ const Deck = ({ cards, userInput, onReset }: DeckProps) => {
                   boxShadow: "0 0 24px rgba(91,46,255,0.12)",
                 }}
                 whileTap={{ scale: 0.96 }}
-                aria-label="Save reading as image"
+                aria-label="Save this reading as image"
                 tabIndex={0}
                 className={`px-8 py-3.5 rounded-xl border font-title text-sm tracking-[0.15em] transition-all duration-300 cursor-pointer ${
                   exportFeedback
@@ -257,12 +218,31 @@ const Deck = ({ cards, userInput, onReset }: DeckProps) => {
                     : "border-[rgba(255,255,255,0.1)] text-[#fefefe]/60 hover:text-[#fefefe] hover:border-[rgba(255,255,255,0.2)] hover:bg-[rgba(255,255,255,0.03)]"
                 }`}
               >
-                {exportFeedback ? "✓ Saved" : "Save as image"}
+                {exportFeedback ? "✓ Saved" : "Save this reading"}
               </motion.button>
             </div>
           </motion.div>
         )}
       </AnimatePresence>
+
+      {/* Off-screen export layout — rendered but invisible */}
+      <div
+        aria-hidden="true"
+        style={{
+          position: "fixed",
+          left: -9999,
+          top: 0,
+          pointerEvents: "none",
+          opacity: 0,
+        }}
+      >
+        <ExportLayout
+          ref={exportRef}
+          cards={cards}
+          userInput={userInput}
+          actionMode={actionMode}
+        />
+      </div>
     </motion.div>
   )
 }
