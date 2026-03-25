@@ -16,10 +16,10 @@ type InputPanelProps = {
   onSubmit: (payload: SubmitPayload) => void
 }
 
-const tabs: { id: InputType; label: string }[] = [
-  { id: "describe", label: "Describe" },
-  { id: "url", label: "Paste URL" },
-  { id: "screenshot", label: "Upload Screenshot" },
+const tabs: { id: InputType; label: string; shortLabel: string }[] = [
+  { id: "describe", label: "Describe", shortLabel: "Describe" },
+  { id: "url", label: "Paste URL", shortLabel: "URL" },
+  { id: "screenshot", label: "Upload Screenshot", shortLabel: "Screenshot" },
 ]
 
 const InputPanel = ({ onSubmit }: InputPanelProps) => {
@@ -115,7 +115,7 @@ const InputPanel = ({ onSubmit }: InputPanelProps) => {
             onClick={() => setActiveTab(tab.id)}
             aria-label={`Switch to ${tab.label} input`}
             tabIndex={0}
-            className={`relative flex-1 py-2.5 px-4 text-sm font-medium rounded-lg transition-all duration-300 cursor-pointer ${
+            className={`relative flex-1 py-2 px-2 sm:py-2.5 sm:px-4 text-xs sm:text-sm font-medium rounded-lg transition-all duration-300 cursor-pointer ${
               activeTab === tab.id
                 ? "text-gold-bright"
                 : "text-[#fefefe]/60 hover:text-[#fefefe]"
@@ -129,7 +129,10 @@ const InputPanel = ({ onSubmit }: InputPanelProps) => {
                 transition={{ type: "spring", stiffness: 400, damping: 30 }}
               />
             )}
-            <span className="relative z-10">{tab.label}</span>
+            <span className="relative z-10">
+              <span className="sm:hidden">{tab.shortLabel}</span>
+              <span className="hidden sm:inline">{tab.label}</span>
+            </span>
           </button>
         ))}
       </div>

@@ -14,6 +14,7 @@ type CardProps = {
   onFlip: () => void
   allRevealed: boolean
   actionMode: boolean
+  isExporting?: boolean
 }
 
 type Sparkle = {
@@ -48,7 +49,7 @@ const getPreferredVoice = (): SpeechSynthesisVoice | null => {
   return male || english || voices[0] || null
 }
 
-const Card = ({ card, index, isFlipped, onFlip, allRevealed, actionMode }: CardProps) => {
+const Card = ({ card, index, isFlipped, onFlip, allRevealed, actionMode, isExporting = false }: CardProps) => {
   const [showBurst, setShowBurst] = useState(false)
   const [isHovered, setIsHovered] = useState(false)
   const [isSpeaking, setIsSpeaking] = useState(false)
@@ -152,31 +153,34 @@ const Card = ({ card, index, isFlipped, onFlip, allRevealed, actionMode }: CardP
   return (
     <motion.div
       className="relative"
-      initial={{
+      initial={isExporting ? { opacity: 1, y: 0, rotateZ: 0 } : {
         opacity: 0,
         y: 70,
         rotateZ: index === 0 ? -5 : index === 2 ? 5 : 0,
       }}
       animate={{ opacity: 1, y: 0, rotateZ: 0 }}
-      transition={{
+      transition={isExporting ? { duration: 0 } : {
         delay: index * 0.18 + 0.2,
         duration: 0.8,
         ease: [0.16, 1, 0.3, 1],
       }}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
+      onMouseEnter={() => !isExporting && setIsHovered(true)}
+      onMouseLeave={() => !isExporting && setIsHovered(false)}
     >
-      {/* Floating idle + speaking scale */}
       <motion.div
         animate={
-          !isFlipped
-            ? { y: [0, -4, 0], scale: 1 }
-            : { y: 0, scale: isSpeaking ? 1.02 : 1 }
+          isExporting
+            ? { y: 0, scale: 1 }
+            : !isFlipped
+              ? { y: [0, -4, 0], scale: 1 }
+              : { y: 0, scale: isSpeaking ? 1.02 : 1 }
         }
         transition={
-          !isFlipped
-            ? { duration: 4 + index * 0.5, repeat: Infinity, ease: "easeInOut" }
-            : { duration: 0.5, ease: "easeOut" }
+          isExporting
+            ? { duration: 0 }
+            : !isFlipped
+              ? { duration: 4 + index * 0.5, repeat: Infinity, ease: "easeInOut" }
+              : { duration: 0.5, ease: "easeOut" }
         }
       >
         {/* ——— LAYER 0: GLOW / AURA ——— */}
@@ -189,13 +193,15 @@ const Card = ({ card, index, isFlipped, onFlip, allRevealed, actionMode }: CardP
             filter: "blur(40px)",
           }}
           animate={{
-            opacity: isSpeaking
-              ? 0.7
-              : isHovered && !isFlipped
-                ? 0.85
-                : isFlipped
-                  ? 0.4
-                  : 0.1,
+            opacity: isExporting
+              ? 0.35
+              : isSpeaking
+                ? 0.7
+                : isHovered && !isFlipped
+                  ? 0.85
+                  : isFlipped
+                    ? 0.4
+                    : 0.1,
           }}
           transition={{ duration: 0.6, ease: "easeOut" }}
         />
@@ -213,18 +219,18 @@ const Card = ({ card, index, isFlipped, onFlip, allRevealed, actionMode }: CardP
                 : `Click to reveal card ${index + 1}`
             }
             className={`relative w-56 h-[26rem] sm:w-64 sm:h-[28rem] preserve-3d will-change-transform ${
-              !isFlipped ? "cursor-pointer" : ""
+              !isFlipped && !isExporting ? "cursor-pointer" : ""
             }`}
             animate={{
               rotateY: isFlipped ? 180 : 0,
-              scale: isFlipped ? [1, 1.08, 1] : 1,
+              scale: isExporting ? 1 : isFlipped ? [1, 1.08, 1] : 1,
             }}
-            transition={{
+            transition={isExporting ? { duration: 0 } : {
               rotateY: { duration: 0.6, ease: "easeInOut" },
               scale: { duration: 0.5, ease: [0.16, 1, 0.3, 1] },
             }}
             whileHover={
-              !isFlipped
+              !isFlipped && !isExporting
                 ? { y: -6, scale: 1.03, transition: { duration: 0.35, ease: "easeOut" } }
                 : {}
             }
@@ -428,18 +434,18 @@ const Card = ({ card, index, isFlipped, onFlip, allRevealed, actionMode }: CardP
                 {/* Top section: tag + title + subtitle */}
                 <div>
                   <motion.p
-                    initial={{ opacity: 0, y: 6 }}
+                    initial={isExporting ? { opacity: 1, y: 0 } : { opacity: 0, y: 6 }}
                     animate={isFlipped ? { opacity: 1, y: 0 } : { opacity: 0, y: 6 }}
-                    transition={{ delay: 0.3, duration: 0.4 }}
+                    transition={isExporting ? { duration: 0 } : { delay: 0.3, duration: 0.4 }}
                     className="text-[10px] uppercase tracking-[0.22em] text-[rgba(245,196,81,0.6)] font-body font-medium mb-1"
                   >
                     {card.tag}
                   </motion.p>
 
                   <motion.h3
-                    initial={{ opacity: 0, y: 8 }}
+                    initial={isExporting ? { opacity: 1, y: 0 } : { opacity: 0, y: 8 }}
                     animate={isFlipped ? { opacity: 1, y: 0 } : { opacity: 0, y: 8 }}
-                    transition={{ delay: 0.38, duration: 0.45 }}
+                    transition={isExporting ? { duration: 0 } : { delay: 0.38, duration: 0.45 }}
                     className="font-title text-xl sm:text-2xl text-[#fefefe] leading-tight"
                   >
                     {card.title}
@@ -448,10 +454,10 @@ const Card = ({ card, index, isFlipped, onFlip, allRevealed, actionMode }: CardP
                   <AnimatePresence mode="wait">
                     <motion.p
                       key={actionMode ? "action-sub" : "mystic-sub"}
-                      initial={{ opacity: 0 }}
+                      initial={isExporting ? { opacity: 0.5 } : { opacity: 0 }}
                       animate={isFlipped ? { opacity: 0.5 } : { opacity: 0 }}
                       exit={{ opacity: 0 }}
-                      transition={{ delay: isFlipped ? 0.46 : 0, duration: 0.3 }}
+                      transition={isExporting ? { duration: 0 } : { delay: isFlipped ? 0.46 : 0, duration: 0.3 }}
                       className={`text-xs mt-1 ${
                         actionMode
                           ? "font-body tracking-wide text-purple-bright"
@@ -469,10 +475,10 @@ const Card = ({ card, index, isFlipped, onFlip, allRevealed, actionMode }: CardP
                     {isFlipped && !actionMode && (
                       <motion.div
                         key="mystic"
-                        initial={{ opacity: 0, y: 6, filter: "blur(6px)" }}
+                        initial={isExporting ? { opacity: 1, y: 0, filter: "blur(0px)" } : { opacity: 0, y: 6, filter: "blur(6px)" }}
                         animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
                         exit={{ opacity: 0, y: -4, filter: "blur(6px)" }}
-                        transition={{ duration: 0.28, ease: "easeOut" }}
+                        transition={isExporting ? { duration: 0 } : { duration: 0.28, ease: "easeOut" }}
                       >
                         <p className="font-body text-sm text-[#fefefe] leading-relaxed">
                           {card.description}
@@ -494,10 +500,10 @@ const Card = ({ card, index, isFlipped, onFlip, allRevealed, actionMode }: CardP
                     {isFlipped && actionMode && card.actions.length > 0 && (
                       <motion.div
                         key="action"
-                        initial={{ opacity: 0, y: 6, filter: "blur(6px)" }}
+                        initial={isExporting ? { opacity: 1, y: 0, filter: "blur(0px)" } : { opacity: 0, y: 6, filter: "blur(6px)" }}
                         animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
                         exit={{ opacity: 0, y: -4, filter: "blur(6px)" }}
-                        transition={{ duration: 0.28, ease: "easeOut" }}
+                        transition={isExporting ? { duration: 0 } : { duration: 0.28, ease: "easeOut" }}
                       >
                         <h4 className="font-body text-[11px] font-medium tracking-[0.1em] uppercase text-[rgba(245,196,81,0.7)] mb-2.5">
                           What to do
@@ -521,7 +527,7 @@ const Card = ({ card, index, isFlipped, onFlip, allRevealed, actionMode }: CardP
                   </AnimatePresence>
 
                   {/* ——— LISTEN BUTTON ——— */}
-                  {isFlipped && hasSpeechSupport && !actionMode && (
+                  {isFlipped && hasSpeechSupport && !actionMode && !isExporting && (
                     <motion.button
                       onClick={handleListen}
                       onKeyDown={e => e.key === "Enter" && handleListen(e)}
@@ -552,7 +558,7 @@ const Card = ({ card, index, isFlipped, onFlip, allRevealed, actionMode }: CardP
 
           {/* ——— GLOW BURST on flip ——— */}
           <AnimatePresence>
-            {showBurst && (
+            {showBurst && !isExporting && (
               <motion.div
                 className="absolute inset-0 rounded-2xl pointer-events-none z-10"
                 initial={{ opacity: 0, scale: 0.9 }}
@@ -569,7 +575,7 @@ const Card = ({ card, index, isFlipped, onFlip, allRevealed, actionMode }: CardP
 
           {/* ——— FLASH overlay on flip ——— */}
           <AnimatePresence>
-            {showBurst && (
+            {showBurst && !isExporting && (
               <motion.div
                 className="absolute inset-0 rounded-2xl pointer-events-none z-10 bg-white/5"
                 initial={{ opacity: 0 }}
@@ -581,7 +587,7 @@ const Card = ({ card, index, isFlipped, onFlip, allRevealed, actionMode }: CardP
 
           {/* ——— SPARKLE PARTICLES on flip ——— */}
           <AnimatePresence>
-            {showBurst &&
+            {showBurst && !isExporting &&
               sparkles.map(s => (
                 <motion.div
                   key={s.id}
@@ -612,7 +618,7 @@ const Card = ({ card, index, isFlipped, onFlip, allRevealed, actionMode }: CardP
 
           {/* ——— DUST REVEAL burst from center ——— */}
           <AnimatePresence>
-            {showBurst &&
+            {showBurst && !isExporting &&
               dustMotes.map(d => (
                 <motion.div
                   key={`dust-${d.id}`}
